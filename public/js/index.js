@@ -37,16 +37,24 @@ header.id = 'header';
 header.innerHTML = 'Aloha';
 document.body.appendChild(header);
 
+var inputContainer = document.createElement('div');
+inputContainer.id = 'inputContainer';
+document.body.appendChild(inputContainer);
+
 var inputBox = document.createElement('input');
 inputBox.id = 'inputBox';
 inputBox.type = 'text';
-inputBox.value = '';
-document.body.appendChild(inputBox);
+inputBox.value = 'people';
+document.getElementById('inputContainer').appendChild(inputBox);
 
 var searchButton = document.createElement('button');
 searchButton.id = 'searchButton';
 searchButton.innerHTML = 'search';
-document.body.appendChild(searchButton);
+document.getElementById('inputContainer').appendChild(searchButton);
+
+var imgContainer = document.createElement('div');
+imgContainer.id = 'imgContainer';
+document.body.appendChild(imgContainer);
 
 
 

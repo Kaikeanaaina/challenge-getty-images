@@ -1398,10 +1398,61 @@ process.chdir = function (dir) {
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 var index = require('./index.js');
 
-$( '#searchButton').click(function(){
-  console.log('#inputBox');
+// var oReq = new XMLHttpRequest();
+
+// function reqListener(){
+//   console.log(this.responseText);
+// }
+
+//  var contentBeingSearched = document.getElementById('inputBox').value;
+//  oReq.open("GET", "https://api.gettyimages.com/v3/search/images?phrase="+contentBeingSearched);
+//  oReq.setRequestHeader('Api-Key','r5tzed7rukawv62y2snrr4a6');
+
+// // oReq.addEventListener("progress", updateProgress);
+// // oReq.addEventListener("load", transferComplete);
+// // oReq.addEventListener("error", transferFailed);
+// // oReq.addEventListener("abort", transferCanceled);
+
+// oReq.send();
+
+$('#searchButton').click(function(event){
+
+  var text =$('#inputBox').val();
+  $.ajax('https://api.gettyimages.com/v3/search/images?phrase='+text,{
+    headers: {
+      'Api-Key': 'r5tzed7rukawv62y2snrr4a6'
+    },
+    type: 'GET'
+  }).done(function(data){
+
+    var soonToClearDiv = document.getElementById('imgContainer');
+    console.log(soonToClearDiv);
+
+    soonToClearDiv.innerHTML = '';
+
+    console.log(data);
+
+    for(var i = 0; i<data.images.length;i++){
+      for(var j = 0; j<data.images[i].display_sizes.length;j++){
+        var image = data.images[i].display_sizes[j].uri;
+        console.log(image);
+
+        var picture = document.createElement('img');
+        picture.src = image;
+        document.getElementById('imgContainer').appendChild(picture);
+
+      }
+    }
+
+
+  });
+
+
+
 });
-}).call(this,require("rH1JPG"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_c8ca0243.js","/")
+
+
+}).call(this,require("rH1JPG"),typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer,arguments[3],arguments[4],arguments[5],arguments[6],"/fake_581de2ae.js","/")
 },{"./index.js":6,"buffer":2,"rH1JPG":4}],6:[function(require,module,exports){
 (function (process,global,Buffer,__argument0,__argument1,__argument2,__argument3,__filename,__dirname){
 //https://www.instapaper.com/api/authenticate
@@ -1443,16 +1494,24 @@ header.id = 'header';
 header.innerHTML = 'Aloha';
 document.body.appendChild(header);
 
+var inputContainer = document.createElement('div');
+inputContainer.id = 'inputContainer';
+document.body.appendChild(inputContainer);
+
 var inputBox = document.createElement('input');
 inputBox.id = 'inputBox';
 inputBox.type = 'text';
-inputBox.value = '';
-document.body.appendChild(inputBox);
+inputBox.value = 'people';
+document.getElementById('inputContainer').appendChild(inputBox);
 
 var searchButton = document.createElement('button');
 searchButton.id = 'searchButton';
 searchButton.innerHTML = 'search';
-document.body.appendChild(searchButton);
+document.getElementById('inputContainer').appendChild(searchButton);
+
+var imgContainer = document.createElement('div');
+imgContainer.id = 'imgContainer';
+document.body.appendChild(imgContainer);
 
 
 
